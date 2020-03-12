@@ -74,6 +74,8 @@ elseif (WIN32)
 	set(PACKAGE_SYSTEM_NAME "windows")
 endif()
 
+_set_default(PACKAGE_SYSTEM_VERSION ${CMAKE_SYSTEM_VERSION})
+
 # --------------------------------
 #  Options
 # --------------------------------
