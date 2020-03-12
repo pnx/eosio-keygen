@@ -4,11 +4,11 @@ mkdir build 2> /dev/null
 pushd build > /dev/null
 
 function usage() {
-	echo "Usage: ${0##*/} [ -h|--help ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [ --disable-threads ] [ --force-ansi ]"
+	echo "Usage: ${0##*/} [ -h|--help ] [ --pkg-type zip|deb ] [ -t|--type Debug|Release|RelWithDebInfo|MinSizeRel ] [ --disable-threads ] [ --force-ansi ]"
 	exit 1
 }
 
-options=$(getopt -n "${0##*/}" -o "lht:" -l "help,type:,disable-threads,force-ansi" -- "$@")
+options=$(getopt -n "${0##*/}" -o "lht:" -l "help,type:,pkg-type:,disable-threads,force-ansi" -- "$@")
 
 [ $? -eq 0 ] || usage
 
@@ -26,6 +26,14 @@ while true; do
 		    usage
 		}
 		ARGS="${ARGS} -DCMAKE_BUILD_TYPE=${1}"
+		;;
+	--pkg-type)
+		shift
+		[[ ! "$1" =~ ^(zip|deb)$ ]] && {
+		    echo "Incorrect package type '$1' provided"
+		    usage
+		}
+		ARGS="${ARGS} -DPKG_TYPE=${1}"
 		;;
 	--disable-threads)
 		ARGS="${ARGS} -DUSE_THREADS=OFF" ;;
