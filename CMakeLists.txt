@@ -18,6 +18,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 # Use installpath from GNUInstallDirs as default.
 include(GNUInstallDirs)
+include(package)
 
 set( CMAKE_INSTALL_SHAREDIR ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME} )
 
@@ -56,4 +57,5 @@ endif()
 # --------------------------------
 
 install(FILES README.md LICENSE LICENSE.bitcoin
-		DESTINATION ${CMAKE_INSTALL_SHAREDIR})
+	DESTINATION ${CMAKE_INSTALL_SHAREDIR}
+	COMPONENT ${PROJECT_NAME})

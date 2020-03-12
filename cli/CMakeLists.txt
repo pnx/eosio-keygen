@@ -58,7 +58,11 @@ target_link_libraries( ${PROGRAM_EXE}
 	${CMAKE_THREAD_LIBS_INIT}
 )
 
-install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+# --------------------------------
+#  Install
+# --------------------------------
+
+install(TARGETS ${PROGRAM_EXE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})
 
 # Win32 specific.
 if (WIN32)
@@ -77,7 +81,13 @@ if (WIN32)
 	)
 
 	# We also need to copy libcrypto dll during install
-	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR})
+	install(FILES ${OPENSSL_LIBCRYPTO_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})
 endif (WIN32)
 
-include( package )
+
+# --------------------------------
+#  Package
+# --------------------------------
+
+set(PACKAGE_${PROJECT_NAME}_DEB_DEPENDS "libssl1.1, libc6")
+package( ${PROGRAM_EXE} )
