@@ -44,6 +44,22 @@ _deb_write_control( ${PACKAGE_${PROJECT_NAME}_DEB_ROOT}/DEBIAN/control )
 
 set(_PACKAGE_TARGET package_${PROJECT_NAME}_deb)
 
+# --------------------------------
+#  Targets
+# --------------------------------
+
+add_custom_target(${_PACKAGE_TARGET}_install
+	COMMAND ${CMAKE_COMMAND} --install . --component ${PROJECT_NAME} --prefix "${PACKAGE_${PROJECT_NAME}_DEB_ROOT}${CMAKE_INSTALL_PREFIX}"
+	WORKING_DIRECTORY ${PACKAGE_OUTPUT_DIR}
+)
+
+add_custom_target(${_PACKAGE_TARGET}_md5
+	COMMAND md5sum `find . -type f -not -path './DEBIAN/*' | sed 's~^./~~'` > DEBIAN/md5sums
+	WORKING_DIRECTORY ${PACKAGE_${PROJECT_NAME}_DEB_ROOT}
+)
+
+add_dependencies(${_PACKAGE_TARGET}_md5 ${_PACKAGE_TARGET}_install)
+
 # Add target
 add_custom_target(${_PACKAGE_TARGET}
 	COMMENT "Creating deb package: ${PACKAGE_${PROJECT_NAME}_DEB_FILENAME}"
@@ -51,3 +67,5 @@ add_custom_target(${_PACKAGE_TARGET}
 	COMMAND fakeroot dpkg-deb --build ${PACKAGE_${PROJECT_NAME}_DEB_ROOT} ${PACKAGE_${PROJECT_NAME}_DEB_FILENAME} > /dev/null
 	WORKING_DIRECTORY ${PACKAGE_OUTPUT_DIR}
 )
+
+add_dependencies(${_PACKAGE_TARGET} ${_PACKAGE_TARGET}_install ${_PACKAGE_TARGET}_md5)
