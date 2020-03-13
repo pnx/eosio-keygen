@@ -89,5 +89,6 @@ endif (WIN32)
 #  Package
 # --------------------------------
 
-set(PACKAGE_${PROJECT_NAME}_DEB_DEPENDS "libssl1.1, libc6")
+set( PACKAGE_${PROJECT_NAME}_DEB_DEPENDS "libssl1.1, libc6" )
+set( PACKAGE_${PROJECT_NAME}_DEB_SECTION "misc" )
 package( ${PROGRAM_EXE} )

@@ -19,5 +19,6 @@ install(
 #  Package
 # --------------------------------
 
-set(PACKAGE_${PROJECT_NAME}_ARCHITECTURE "any")
+set( PACKAGE_${PROJECT_NAME}_ARCHITECTURE "any" )
+set( PACKAGE_${PROJECT_NAME}_DEB_SECTION "misc" )
 package()
