@@ -43,6 +43,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Dependancies
+        run: |
+          Install-Module -Name VcRedist -Force
+          New-Item -Path C:\Temp\VcRedist -ItemType Directory
+          $VcList = Get-VcList -Release "2012"
+          Save-VcRedist -VcList $VcList -Path C:\Temp\VcRedist
+          Install-VcRedist -Path C:\Temp\VcRedist -VcList $VcList -Silent
+
       - name: Configure
         run: |
           if ("${{matrix.arch}}" -eq "x86") {
