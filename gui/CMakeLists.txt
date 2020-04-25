@@ -44,6 +44,12 @@ set( PROGRAM_SRC
 
 add_executable( ${PROGRAM_EXE} WIN32 ${PROGRAM_SRC} )
 
+target_compile_definitions( ${PROGRAM_EXE}
+	 # disable C3515 for MSVC as qt < 5.11 has a bug in <QtCore/qalgorithms.h>
+	 # that qCountLeadingZeroBits() is marked constexpr but returns a non-const value.
+	 # See https://docs.microsoft.com/en-us/cpp/error-messages/compiler-errors-2/compiler-error-c3615?view=vs-2019
+	 PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/wd3515>" )
+
 # Libraries
 target_link_libraries( ${PROGRAM_EXE} common )
 
