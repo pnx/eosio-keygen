@@ -43,11 +43,17 @@ jobs:
       shell: bash
       run: sudo apt-get install qt5-default
 
-    - name: Qt - Windows/Mac
-      if: startsWith(matrix.build, 'gui') && runner.os != 'Linux'
+    - name: Qt - Mac
+      if: startsWith(matrix.build, 'gui') && runner.os == 'MacOS'
       uses: jurplel/install-qt-action@v2
       with:
         version: '5.9'
+
+    - name: Qt - Windows
+      if: startsWith(matrix.build, 'gui') && runner.os == 'Windows'
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.11.0'
 
     - name: Configure
       shell: bash

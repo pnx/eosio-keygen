@@ -57,7 +57,7 @@ jobs:
       - name: Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.9'
+          version: '5.11.0'
 
       - name: Configure
         run: |
